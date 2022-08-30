@@ -1,0 +1,32 @@
+models:
+  Facture:
+    facture_number: string:10
+    total: decimal:8,2 unsigned
+    status: enum:failed,successful,pending
+    relationships:
+      belongsToMany: Produit
+
+  Produit:
+    titre: string:10
+    slug: varchar:3
+    prix: integer unsigned
+    is_available: boolean default:true
+    relationships:
+      belongsToMany: Facture
+
+controllers:
+  Produit:
+    index:
+      query: all
+      render: produits.index with:produits
+
+    show:
+      render: produits.show with:produit
+
+    store:
+      validate: title, price, is_available
+      save: produit
+      send: ProduitStoreNotification to:produit.user with:produit
+      redirect: produits.index
+
+seeders: Produit, Facture
