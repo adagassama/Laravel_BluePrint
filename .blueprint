@@ -1,0 +1,22 @@
+created:
+    - app/Http/Controllers/ProduitController.php
+    - database/factories/FactureFactory.php
+    - database/factories/ProduitFactory.php
+    - database/migrations/2022_08_30_215109_create_factures_table.php
+    - database/migrations/2022_08_30_215110_create_produits_table.php
+    - database/migrations/2022_08_30_215111_create_facture_produit_table.php
+    - app/Models/Facture.php
+    - app/Models/Produit.php
+    - database/seeders/ProduitSeeder.php
+    - database/seeders/FactureSeeder.php
+    - tests/Feature/Http/Controllers/ProduitControllerTest.php
+    - app/Http/Requests/ProduitStoreRequest.php
+    - app/Notification/ProduitStoreNotification.php
+    - resources/views/produits/index.blade.php
+    - resources/views/produits/show.blade.php
+updated:
+    - routes/web.php
+models:
+    User: { name: 'string:100', email: 'string:100', relationships: { hasMany: 'Facture, Produit' } }
+    Facture: { facture_number: 'string:10', total: 'decimal:8,2 unsigned', status: 'enum:failed,successful,pending', relationships: { belongsToMany: Produit } }
+    Produit: { titre: 'string:10', slug: 'varchar:3', prix: 'integer unsigned', is_available: 'boolean default:true', relationships: { belongsToMany: Facture } }
